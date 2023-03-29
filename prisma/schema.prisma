@@ -79,7 +79,7 @@ model Column {
   id      String @id @default(cuid())
   boardId String
   title   String
-  order   String
+  order   Int?
   tasks   Task[]
 
   board Board @relation(fields: [boardId], references: [id], onDelete: Cascade)
