@@ -1,13 +1,26 @@
 import React, { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
+import Spinner from "~/ui/Spinner";
 
 type Props = {
   open: boolean;
   setOpen: (open: boolean) => void;
   children: React.ReactNode;
+  isLoading?: boolean;
+  size?: string;
 };
 
-const Modal: React.FC<Props> = ({ open, setOpen, children }) => {
+const Modal: React.FC<Props> = ({ open, setOpen, children, isLoading, size = '3xl' }) => {
+  if (isLoading) {
+    return (
+      <div className="fixed inset-0 z-10 overflow-y-auto bg-zinc-800/50">
+        <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+          <Spinner />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={setOpen}>
@@ -20,7 +33,7 @@ const Modal: React.FC<Props> = ({ open, setOpen, children }) => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-zinc-800/75 transition-opacity" />
+          <div className="fixed inset-0 bg-zinc-800/50 transition-opacity" />
         </Transition.Child>
 
         <div className="fixed inset-0 z-10 overflow-y-auto">
@@ -34,7 +47,7 @@ const Modal: React.FC<Props> = ({ open, setOpen, children }) => {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative overflow-hidden rounded-lg bg-[#18181b] p-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-3xl">
+              <Dialog.Panel className={`relative overflow-hidden rounded-lg bg-white p-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-3xl`}>
                 {children}
               </Dialog.Panel>
             </Transition.Child>

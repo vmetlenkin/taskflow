@@ -6,7 +6,7 @@
 
 /** @type {import("next").NextConfig} */
 const config = {
-  reactStrictMode: true,
+  reactStrictMode: false,
 
   /**
    * If you have the "experimental: { appDir: true }" setting enabled, then you
@@ -17,6 +17,9 @@ const config = {
   i18n: {
     locales: ["en"],
     defaultLocale: "en",
+  },
+  images: {
+    domains: ['flowbite.com', 'avatars.githubusercontent.com'],
   },
 };
 export default config;
