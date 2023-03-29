@@ -1,11 +1,10 @@
 import React, {  useState } from "react";
-import { useKanbanStore } from "~/components/KanbanBoard/KanbanBoard.store";
+import { BoardResponse, IBoard, useKanbanStore } from "~/components/KanbanBoard/KanbanBoard.store";
 import { DragDropContext, Draggable, Droppable, DropResult } from "@hello-pangea/dnd";
 import { api } from "~/utils/api";
 import Spinner from "~/ui/Spinner";
 import Button from "~/ui/Button";
 import CreateTaskModal from "~/components/KanbanBoard/components/CreateTaskModal";
-import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { getNewRank } from "~/components/KanbanBoard/KanbanBoard.helpers";
 import CreateColumnModal from "~/components/KanbanBoard/components/CreateColumnModal";
@@ -28,10 +27,10 @@ const KanbanBoard: React.FC<Props> = ({ id }) => {
     setSelectedColumnTaskNumber,
     board
   } = useKanbanStore();
-  const session = useSession();
+  const { data: sessionData } = useSession();
 
   const { isLoading } = api.board.getBoardByID.useQuery({ id }, {
-    onSuccess: (board) => {
+    onSuccess: (board: BoardResponse) => {
       setBoard(board);
     }
   });
@@ -59,7 +58,7 @@ const KanbanBoard: React.FC<Props> = ({ id }) => {
 
     const { tasks } = board!.columns[destination.droppableId]!;
     const isDifferentColumn = source.droppableId !== destination.droppableId;
-    const rank = getNewRank(source.index, destination.index, tasks, isDifferentColumn);
+    const rank = getNewRank(source.index, destination.index, tasks!, isDifferentColumn);
 
     dragTask({
       id: draggableId,
@@ -105,7 +104,7 @@ const KanbanBoard: React.FC<Props> = ({ id }) => {
                         {...provided.droppableProps}
                       >
                         <div className="p-2">
-                          {column[1].tasks.map((item, index) => (
+                          {column[1].tasks?.map((item, index) => (
                             <Draggable
                               key={item.id}
                               draggableId={item.id}
@@ -131,12 +130,10 @@ const KanbanBoard: React.FC<Props> = ({ id }) => {
                                       <ChatBubbleOvalLeftEllipsisIcon className="w-5 h-5" />
                                       <div>0</div>
                                     </div>
-                                    <Image
-                                      width={50}
-                                      height={50}
+                                    <img
                                       className="w-8 h-8 rounded-full"
-                                      src={session?.data?.user.image}
-                                      alt="Avatar"
+                                      src={sessionData!.user.image!}
+                                      alt="Rounded avatar"
                                     />
                                   </div>
                                 </div>
@@ -151,7 +148,7 @@ const KanbanBoard: React.FC<Props> = ({ id }) => {
                           <Button
                             onClick={() => {
                               showCreateTaskModal(true);
-                              setSelectedColumnTaskNumber(column[1].tasks.length);
+                              setSelectedColumnTaskNumber(column[1].tasks!.length);
                               setSelectedColumnId(column[0]);
                             }}
                             fullWidth

@@ -1,6 +1,5 @@
 import React from "react";
-import Image from "next/image";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 const Header = () => {
   const { data: sessionData } = useSession();
@@ -11,11 +10,9 @@ const Header = () => {
       <div className="flex space-x-4 items-center">
         <div>{sessionData?.user?.name}</div>
         {sessionData &&
-          <Image
-            width={50}
-            height={50}
+          <img
             className="w-8 h-8 rounded-full"
-            src={sessionData?.user?.image}
+            src={sessionData.user.image!}
             alt="Rounded avatar"
           />
         }

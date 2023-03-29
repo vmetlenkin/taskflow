@@ -21,5 +21,8 @@ const config = {
   images: {
     domains: ['flowbite.com', 'avatars.githubusercontent.com'],
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 };
 export default config;

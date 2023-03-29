@@ -1,6 +1,5 @@
-import { createTRPCRouter, protectedProcedure, publicProcedure } from "~/server/api/trpc";
+import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { z } from "zod";
-import { LexoRank } from "lexorank";
 
 export const boardRouter = createTRPCRouter({
   getBoardsByUserID: protectedProcedure
@@ -88,7 +87,7 @@ export const boardRouter = createTRPCRouter({
       endColumnId: z.string(),
       endColumnPosition: z.string()
     }))
-    .mutation(async ({ ctx, input }) => {
+    .mutation(({ ctx, input }) => {
       return ctx.prisma.task.update({
         where: {
           id: input.id

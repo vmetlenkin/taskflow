@@ -8,21 +8,21 @@ export function getNewRank(
   isDifferentColumn: boolean)
 {
   if (!tasks.length) {
-    return  LexoRank.middle().toString();
+    return LexoRank.middle().toString();
   }
 
   if (destinationIndex === 0) {
-    return  LexoRank.parse(tasks[0]!.order).genPrev().toString();
+    return LexoRank.parse(tasks[0].order!).genPrev().toString();
   }
 
   if (!isDifferentColumn && destinationIndex === tasks.length - 1) {
-    return  LexoRank.parse(tasks[tasks.length - 1]!.order)
+    return LexoRank.parse(tasks[tasks.length - 1].order)
       .genNext()
       .toString();
   }
 
   if (isDifferentColumn && destinationIndex === tasks.length) {
-    return LexoRank.parse(tasks[tasks.length - 1]!.order)
+    return LexoRank.parse(tasks[tasks.length - 1].order)
       .genNext()
       .toString();
   }
@@ -33,7 +33,7 @@ export function getNewRank(
     tasksCopy.splice(sourceIndex, 1)
   }
 
-  const previousRank = LexoRank.parse(tasksCopy[destinationIndex - 1]!.order);
+  const previousRank = LexoRank.parse(tasksCopy[destinationIndex - 1].order);
   const nextRank = LexoRank.parse(tasksCopy[destinationIndex]!.order);
   return  previousRank.between(nextRank).toString();
 }

@@ -3,12 +3,18 @@ import { immer } from "zustand/middleware/immer";
 import { devtools } from "zustand/middleware";
 import { DraggableLocation } from "@hello-pangea/dnd";
 
+export interface BoardResponse {
+  id: string;
+  name: string;
+  columns: IColumn[];
+}
+
 export interface ITask {
   id: string;
   columnId: string;
   title: string;
   description: string;
-  order: string;
+  order: string | null;
 }
 
 export interface IBoard {
@@ -22,8 +28,8 @@ export interface IBoard {
 export interface IColumn {
   id: string;
   title: string;
-  tasks: ITask[];
-  order: number;
+  tasks?: ITask[];
+  order: number | null;
 }
 
 interface KanbanState {
@@ -32,7 +38,7 @@ interface KanbanState {
   selectedColumnId: string;
   selectedColumnTaskNumber: number;
   selectedTaskId: string;
-  setBoard: (board: IBoard) => void;
+  setBoard: (board: BoardResponse) => void;
   setSelectedColumnId: (id: string) => void;
   setSelectedColumnTaskNumber: (number: number) => void;
   addTask: (task: ITask) => void;
@@ -75,25 +81,25 @@ export const useKanbanStore = create<KanbanState>()(devtools(immer((set) => ({
   }),
 
   addTask: (task) => set(state => {
-    state.board!.columns[task.columnId]?.tasks.push(task);
+    state.board.columns[task.columnId].tasks.push(task);
   }),
 
   addColumn: (column) => set(state => {
-    state.board!.columns[column.id] = { ...column };
+    state.board.columns[column.id] = { ...column };
   }),
 
   moveTask: (source, destination) => set(state => {
-    const sourceColumn = state.board!.columns[source.droppableId];
-    const destinationColumn = state.board!.columns[destination.droppableId];
-    const itemMoved = { ...sourceColumn!.tasks[source.index] };
+    const sourceColumn = state.board.columns[source.droppableId];
+    const destinationColumn = state.board.columns[destination.droppableId];
+    const itemMoved = { ...sourceColumn.tasks[source.index] };
 
     sourceColumn!.tasks.splice(source.index, 1);
     destinationColumn!.tasks.splice(destination.index, 0, itemMoved);
   }),
 
   updateTask: (task) => set(state => {
-    const column = state.board!.columns[task.columnId];
-    const taskIndex = column!.tasks.findIndex(t => t.id === task.id);
+    const column = state.board.columns[task.columnId];
+    const taskIndex = column.tasks.findIndex(t => t.id === task.id);
     column!.tasks[taskIndex] = task;
   }),
 
@@ -106,11 +112,11 @@ export const useKanbanStore = create<KanbanState>()(devtools(immer((set) => ({
   }),
 
   removeTask: (task) => set(state => {
-    const column = state.board!.columns[task.columnId];
-    column!.tasks = column!.tasks.filter(t => t.id !== task.id);
+    const column = state.board.columns[task.columnId];
+    column.tasks = column.tasks.filter(t => t.id !== task.id);
   }),
 
   removeColumn: (column) => set(state => {
-    delete state.board!.columns[column.id];
+    delete state.board.columns[column.id];
   })
 }))));

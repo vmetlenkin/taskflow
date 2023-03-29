@@ -32,7 +32,7 @@ const CreateColumnModal: React.FC<Props> = ({ open, setOpen }) => {
   const { addColumn, board } = useKanbanStore();
 
   const { mutate: createColumn, isLoading: isCreatingColumn } = api.board.createColumn.useMutation({
-    onSuccess: (column) => {
+    onSuccess: (column: IColumn) => {
       addColumn(column);
       setOpen(false);
       resetFormFields();
@@ -41,7 +41,7 @@ const CreateColumnModal: React.FC<Props> = ({ open, setOpen }) => {
 
   const handleCreateColumn: SubmitHandler<ValidationSchema> = (formData) => {
     createColumn({
-      boardId: board.id,
+      boardId: board!.id,
       order: 1,
       title: formData.title
     });

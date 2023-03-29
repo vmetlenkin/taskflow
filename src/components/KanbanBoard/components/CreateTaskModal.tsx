@@ -4,7 +4,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import Modal from "~/ui/Modal";
 import Button from "~/ui/Button";
 import { api } from "~/utils/api";
-import { useKanbanStore } from "~/components/KanbanBoard/KanbanBoard.store";
+import { ITask, useKanbanStore } from "~/components/KanbanBoard/KanbanBoard.store";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LexoRank } from "lexorank";
@@ -35,7 +35,7 @@ const CreateTaskModal: React.FC<Props> = ({ open, setOpen }) => {
   const { addTask } = useKanbanStore();
 
   const { mutate: createTask, isLoading: isCreatingTask } = api.board.createTask.useMutation({
-    onSuccess: (task) => {
+    onSuccess: (task: ITask) => {
       addTask(task);
       setOpen(false);
       resetFormFields();
@@ -43,16 +43,11 @@ const CreateTaskModal: React.FC<Props> = ({ open, setOpen }) => {
   });
 
   const handleCreateTask: SubmitHandler<ValidationSchema> = (formData) => {
-    // TO REFACTOR !!!
-    const tasks = board.columns[selectedColumnId]?.tasks;
-    let order;
-    if (!tasks.length) {
-      order = LexoRank.middle().toString();
-    } else {
-      order = LexoRank.parse(tasks[tasks.length - 1].order)
-        .genNext()
-        .toString();
-    }
+    const tasks = board?.columns[selectedColumnId]?.tasks;
+
+    const order = !tasks?.length ?
+      LexoRank.middle().toString() :
+      LexoRank.parse(tasks[tasks.length - 1]?.order as string).genNext().toString();
 
     createTask({
       columnId: selectedColumnId,

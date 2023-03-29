@@ -39,13 +39,13 @@ const EditTaskModal: React.FC<Props> = ({ open, setOpen}) => {
   } = useKanbanStore();
 
   const { isLoading: isTaskLoading } = api.board.getTaskByID.useQuery({ id: selectedTaskId }, {
-    onSuccess: (task) => {
+    onSuccess: (task: ITask) => {
       setTask(task);
     }
   });
 
   const { mutate: updateTaskMutation, isLoading: isTaskUpdating } = api.board.updateTask.useMutation({
-    onSuccess: (task) => {
+    onSuccess: (task: ITask) => {
       updateTask(task);
       setOpen(false);
       resetFormFields();
@@ -53,7 +53,7 @@ const EditTaskModal: React.FC<Props> = ({ open, setOpen}) => {
   });
 
   const { mutate: removeTaskMutation, isLoading: isTaskRemoving } = api.board.removeTaskByID.useMutation({
-    onSuccess: (task) => {
+    onSuccess: (task: ITask) => {
       removeTask(task);
       setOpen(false);
       resetFormFields();
@@ -68,18 +68,19 @@ const EditTaskModal: React.FC<Props> = ({ open, setOpen}) => {
   }, [task]);
 
   const handleUpdateTask: SubmitHandler<ValidationSchema> = (formData) => {
-    const updatedTask = {
+    const updatedTask: ITask = {
       id: task.id,
       columnId: task.columnId,
       title: formData.title,
-      description: formData.description
+      description: formData.description,
+      order: task.order,
     };
 
     updateTaskMutation(updatedTask);
   }
 
   const handleRemoveTask = () => {
-    removeTaskMutation({ id: task.id });
+    removeTaskMutation({ id: task!.id });
   }
 
   return (

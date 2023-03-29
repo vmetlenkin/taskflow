@@ -2,7 +2,7 @@ import React from "react";
 import Modal from "~/ui/Modal";
 import Button from "~/ui/Button";
 import { api } from "~/utils/api";
-import { useKanbanStore } from "~/components/KanbanBoard/KanbanBoard.store";
+import { IColumn, useKanbanStore } from "~/components/KanbanBoard/KanbanBoard.store";
 import { TrashIcon, XMarkIcon } from "@heroicons/react/24/solid";
 
 type Props = {
@@ -14,7 +14,7 @@ const DeleteColumnModal: React.FC<Props> = ({ open, setOpen }) => {
   const { selectedColumnId, removeColumn } = useKanbanStore();
 
   const { mutate: deleteColumn, isLoading: isColumnDeleting } = api.board.removeColumnByID.useMutation({
-    onSuccess: (column) => {
+    onSuccess: (column: IColumn) => {
       removeColumn(column);
       setOpen(false);
     }
