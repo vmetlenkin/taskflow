@@ -33,7 +33,6 @@ const DeleteColumnModal: React.FC<Props> = ({ open, setOpen }) => {
       </div>
       <div className="flex space-x-2">
         <Button
-          color="red"
           isLoading={isColumnDeleting}
           onClick={() => deleteColumn({ id: selectedColumnId })}
         >

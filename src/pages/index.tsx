@@ -1,7 +1,7 @@
 import { type NextPage } from "next";
 import { getSession, signIn } from "next-auth/react";
 import React from "react";
-import GithubIcon from "~/modules/svg/GithubIcon";
+import GithubIcon from "~/svg/GithubIcon";
 
 const Home: NextPage = () => {
   return (
