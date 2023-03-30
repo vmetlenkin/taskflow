@@ -39,6 +39,8 @@ const EditTaskModal: React.FC<Props> = ({ open, setOpen}) => {
   } = useKanbanStore();
 
   const { isFetching: isTaskFetching } = api.board.getTaskByID.useQuery({ id: selectedTaskId }, {
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
     onSuccess: (task: ITask) => {
       setTask(task);
     }
