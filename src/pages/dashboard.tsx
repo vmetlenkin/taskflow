@@ -5,8 +5,8 @@ import { api } from "~/utils/api";
 import Spinner from "~/ui/Spinner";
 import Link from "next/link";
 import Button from "~/ui/Button";
-import CreateProjectModal from "~/components/CreateProjectModal";
-import Header from "~/components/Header/Header";
+import CreateProjectModal from "~/modules/CreateProjectModal";
+import Header from "~/modules/Header/Header";
 
 const Dashboard: NextPage = () => {
   const { data: boards, refetch: refetchBoards, isLoading } = api.board.getBoardsByUserID.useQuery();

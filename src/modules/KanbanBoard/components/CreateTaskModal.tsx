@@ -4,7 +4,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import Modal from "~/ui/Modal";
 import Button from "~/ui/Button";
 import { api } from "~/utils/api";
-import { ITask, useKanbanStore } from "~/components/KanbanBoard/KanbanBoard.store";
+import { ITask, useKanbanStore } from "~/modules/KanbanBoard/KanbanBoard.store";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LexoRank } from "lexorank";

@@ -1,5 +1,5 @@
 import { LexoRank } from "lexorank";
-import { ITask } from "~/components/KanbanBoard/KanbanBoard.store";
+import { ITask } from "~/modules/KanbanBoard/KanbanBoard.store";
 
 export function getNewRank(
   sourceIndex: number,

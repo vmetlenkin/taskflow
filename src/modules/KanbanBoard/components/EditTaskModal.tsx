@@ -4,7 +4,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { api } from "~/utils/api";
 import Modal from "~/ui/Modal";
-import { ITask, useKanbanStore } from "~/components/KanbanBoard/KanbanBoard.store";
+import { ITask, useKanbanStore } from "~/modules/KanbanBoard/KanbanBoard.store";
 import Button from "~/ui/Button";
 
 const validationSchema = z.object({
@@ -38,7 +38,7 @@ const EditTaskModal: React.FC<Props> = ({ open, setOpen}) => {
     removeTask
   } = useKanbanStore();
 
-  const { isLoading: isTaskLoading } = api.board.getTaskByID.useQuery({ id: selectedTaskId }, {
+  const { isFetching: isTaskFetching } = api.board.getTaskByID.useQuery({ id: selectedTaskId }, {
     onSuccess: (task: ITask) => {
       setTask(task);
     }
@@ -80,11 +80,11 @@ const EditTaskModal: React.FC<Props> = ({ open, setOpen}) => {
   }
 
   const handleRemoveTask = () => {
-    removeTaskMutation({ id: task!.id });
+    removeTaskMutation({ id: task?.id });
   }
 
   return (
-    <Modal isLoading={isTaskLoading} open={open} setOpen={setOpen}>
+    <Modal isLoading={isTaskFetching} open={open} setOpen={setOpen}>
       <form onSubmit={handleSubmit(handleUpdateTask)}>
         <div className="mb-2">
           <input

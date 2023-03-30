@@ -1,6 +1,6 @@
 import React from "react";
-import KanbanBoard from "~/components/KanbanBoard/KanbanBoard";
-import Header from "~/components/Header/Header";
+import KanbanBoard from "~/modules/KanbanBoard/KanbanBoard";
+import Header from "~/modules/Header/Header";
 import { getSession } from "next-auth/react";
 
 type Props = {

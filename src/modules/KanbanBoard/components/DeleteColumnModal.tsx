@@ -2,7 +2,7 @@ import React from "react";
 import Modal from "~/ui/Modal";
 import Button from "~/ui/Button";
 import { api } from "~/utils/api";
-import { IColumn, useKanbanStore } from "~/components/KanbanBoard/KanbanBoard.store";
+import { IColumn, useKanbanStore } from "~/modules/KanbanBoard/KanbanBoard.store";
 import { TrashIcon, XMarkIcon } from "@heroicons/react/24/solid";
 
 type Props = {

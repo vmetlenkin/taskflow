@@ -1,7 +1,7 @@
 import React from "react";
 import Dropdown from "~/ui/Dropdown";
 import { Menu } from "@headlessui/react";
-import { useKanbanStore } from "~/components/KanbanBoard/KanbanBoard.store";
+import { useKanbanStore } from "~/modules/KanbanBoard/KanbanBoard.store";
 import { TrashIcon } from "@heroicons/react/24/outline";
 
 type Props = {
