@@ -134,7 +134,7 @@ const KanbanColumn: React.FC<KanbanColumnProps> = (props) => {
   } = useKanbanStore();
 
   return (
-    <div className="bg-gray-200 shrink-0 rounded-md w-1/5 2xl:w-1/6">
+    <div className="bg-gray-200 shrink-0 rounded-md w-full xs:1/2 sm:w-1/3 lg:w-1/4 xl:w-1/5 2xl:w-1/6">
       <div className="flex justify-between p-2 items-center">
         <div className="w-full font-medium">{column[1].title}</div>
         <ColumnMenu id={column[1].id} showDeleteColumnModal={showDeleteColumnModal} />

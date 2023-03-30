@@ -112,8 +112,19 @@ const EditTaskModal: React.FC<Props> = ({ open, setOpen}) => {
           )}
         </div>
         <div className="flex space-x-2">
-          <Button isLoading={isTaskUpdating}>Update Task</Button>
-          <Button color="red" type="button" onClick={handleRemoveTask} isLoading={isTaskRemoving}>Remove Task</Button>
+          <Button
+            isLoading={isTaskUpdating}
+            disabled={isTaskUpdating}
+          >
+            Update Task
+          </Button>
+          <Button
+            type="button"
+            onClick={handleRemoveTask}
+            isLoading={isTaskRemoving}
+          >
+            Remove Task
+          </Button>
         </div>
       </form>
     </Modal>

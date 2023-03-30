@@ -93,7 +93,9 @@ const CreateTaskModal: React.FC<Props> = ({ open, setOpen }) => {
           )}
         </div>
         <div className="pt-4">
-          <Button isLoading={isCreatingTask}>Create task</Button>
+          <Button isLoading={isCreatingTask}>
+            Create task
+          </Button>
         </div>
       </form>
     </Modal>

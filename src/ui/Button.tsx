@@ -6,12 +6,22 @@ type Props = {
   isLoading?: boolean;
   fullWidth?: boolean;
   type?: 'submit' | 'button';
-  color?:  'indigo' | 'red';
+  disabled?: boolean;
 }
 
-const Button: React.FC<Props> = ({ children, onClick, isLoading, fullWidth = false, type= 'submit', color = 'indigo' }) => {
+const Button: React.FC<Props> = (props) => {
+  const {
+    children,
+    onClick,
+    isLoading,
+    fullWidth = false,
+    type = 'submit',
+    disabled = false,
+  } = props;
+
   return (
     <button
+      disabled={isLoading || disabled}
       type={type}
       className={`${fullWidth ? 'w-full' : ' '} inline-flex justify-center rounded-md border border-transparent shadow-sm px-4
         py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none
